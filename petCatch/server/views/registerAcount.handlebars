@@ -1,0 +1,26 @@
+<div>
+    <form class="Form" action="/register" method="POST" enctype="multipart/form-data">
+
+        <div class="input-user">
+            <label for="user">Nombre de Usuario</label>
+            <input class="miBarra" type="text" name="user" id="user">
+        </div>
+        <div class="input-user">
+            <label for="password">Ingrese una Contraseña</label>
+            <input class="miBarra" type="password" name="password" id="password">
+        </div>
+        <div class="input-user">
+            <label for="passwordConfirm">Reingrese la Contraseña</label>
+            <input class="miBarra" type="password" name="passwordConfirm" id="passwordConfirm">
+        </div>
+       
+
+        <input class="resgisterBtn" type="submit" value="registrarse">
+    </form>
+</div>
+
+<input class="volver" type="submit" value="Cancelar registro">
+
+{{#if message}}
+<p class="mensaje-{{message.class}}">{{message.text}}</p>
+{{/if}}

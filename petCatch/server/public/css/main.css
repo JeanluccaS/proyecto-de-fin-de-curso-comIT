@@ -1,0 +1,65 @@
+img{
+    height: 250px;
+    border-radius: 100%;
+    width: 250px;
+}
+.profilePics{
+    margin: 50px 0px 0px 0px;
+    border: solid;
+    height: 250px;
+    width: 250px;
+    border-radius: 100%;
+ 
+}
+.header{  
+     margin-bottom: 7px;
+}
+
+.navbar {
+    background-color: royalblue;
+    height: 50px;
+}
+
+.navbar span{
+    color: white;
+    font-family: monospace;
+    font-size: xxx-large;
+}
+
+.superBody{
+    background-image:url("../img/fondoSinLogo.jpg");
+    padding: 2px;
+    margin: 0px;
+}
+
+.navbar ul{
+    list-style: none;
+    padding: 0px;
+    margin: 0px;
+}
+.navbar li{
+    display: inline;
+    margin-left: 20px;
+    margin-right: 20px;
+    
+   padding-left: 100px;
+    
+}
+
+.links{
+    margin-left: 60px;
+    margin-right: 60px;
+}
+
+.navbar div{
+    display: inline;
+}
+.navbar form{
+    display: inline;
+}
+.signout {
+    text-align-last: right;
+ }
+.navbar input {
+    margin-top: 5px;
+}

@@ -1,0 +1,30 @@
+
+<div>
+    <div class="formLogin" >
+        <form class="miForm"action="/login" method="POST">
+                <label for="user">Nombre de Usuario</label>
+                <input class="usuario" type="text" name="user" id="user">
+
+                <label for="password">Contraseña</label>
+                <input class="usuario" type="password" name="password" id="password">
+            
+            <input class="loginBtn" type="submit" value="ingresar">
+        </form>
+    </div>
+</div>
+{{#if message}}
+
+<span class="mensaje-{{message.class}}">  {{message.text}}   </span>
+{{/if}}
+
+
+<div class="description">
+    <p>Bienvenido a petCatch! Una pagina en donde vas a poder compartir con todos fotos, videos o memes de tus mascotas.
+        Tambien vas a poder agregar a otros usuarios y comentar sus publicaciones!.
+        y todo empieza con un click.
+    </p>
+</div>
+
+    <a class="Registrate" href="/registrarse">Registrate!!</a>
+
+

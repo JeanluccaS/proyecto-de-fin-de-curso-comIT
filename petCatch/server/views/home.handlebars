@@ -1,0 +1,9 @@
+
+
+ <form action="/newPost" method="POST" enctype="multipart/form-data">
+            <input  type="file" name="postImage" accept="image/*">
+            <button type="submit">Subir una imagen</button>
+        </form>
+{{#if message}}
+<p class="mensaje-{{message.class}}">{{message.text}}</p>
+{{/if}}

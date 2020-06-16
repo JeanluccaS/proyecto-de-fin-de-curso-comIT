@@ -1,0 +1,101 @@
+.description{
+    margin: 10px;
+    margin-right: 70%;
+    margin-left: 30px;
+    margin-top: 100px;
+    border: groove;
+    border-bottom-width: thick;
+    padding: 5px;
+    border-radius: 10px;
+    background-color: white;
+}
+p{
+    margin: 0px;
+    font-size: large;
+    font-family: monospace;
+    font-style: italic;
+    padding: 40px;
+}
+
+.usuario{
+    display: block;
+    margin: 3px;
+    background-color: whitesmoke;
+}
+.miBarra{
+    display: block;
+}
+.input-user form{
+    display: flex;
+    padding: 0;
+    margin-left: 45%;
+    background-color: white;
+}
+.mensaje-error{
+    background-color: #ff5858;
+    border-radius: 10px;
+    display: flex;
+    font-family: monospace;
+    font-size: larger;
+    color: #0c0202;
+    margin-right: 30px;
+    margin-top: 5px;
+    margin-left: 800px;
+    padding: 10px;
+}
+    
+.Form{
+    background-color: blue;
+}
+.mensaje-todoOk{
+    color:violet;
+}
+.superBody{
+    background-image:url("../img/fondo\ de\ pagina.jpg");
+    padding: 2px;
+    margin: 0px;
+}
+
+.formLogin{
+    background-color: royalblue;
+    padding: 5px;
+}
+.usuario,label{
+    margin:2px;
+    font-size: large;
+    font-family: monospace;
+    color: honeydew;
+    border-radius: 3px;
+    padding: 1px;
+    
+}
+.loginBtn{
+    border-radius: 100%;
+    margin-left: 5px;
+    background: #fff4f4;
+}
+.miForm{
+    display: flex;
+    padding: 0;
+    margin-left: 45%;
+}
+.Registrate{
+    background-color: darkgoldenrod;
+    color: black;
+    font-size: larger;
+    padding: 10px;
+    font-style: initial;
+    font-family: monospace;
+    border-radius: 10px;
+    margin-left: 220px;
+    text-decoration: blink
+}
+.parrafo{
+    margin: 0px;
+    font-size: large;
+    font-family: monospace;
+    font-style: italic;
+    padding: 10px;
+}
+
+

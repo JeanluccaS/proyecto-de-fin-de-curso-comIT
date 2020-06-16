@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/main.css">
+    <title>petCatch</title>
+</head>
+<body class="superBody">
+    <div class="header">
+       
+        <nav class="navbar">
+             
+            <ul>
+                <li>
+                    <span>petCatch</span>
+                </li>
+                <li>
+                    <form class="search" action="/search" method="GET">
+                        <input type="search" name="name" id="search">
+                        <button>Vamos ahi</button>
+                    </form>
+                </li>
+                <li class="links">
+                    <a href="/home">INICIO</a>
+                </li>
+                <li class="links">
+                    <div>
+                        <a href="/logout">Cerrar sesion {{user}}</a>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <script>
+        const nameValue = document.getElementById("search").value;
+
+        document.getElementById("serach").value = nameValue;
+    </script>
+
+    {{{body}}}
+</body>
+
+</html>
