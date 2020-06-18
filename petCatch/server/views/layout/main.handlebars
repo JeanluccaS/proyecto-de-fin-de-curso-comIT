@@ -1,17 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link rel="stylesheet" href="/css/main.css">
+
     <title>petCatch</title>
 </head>
+
 <body class="superBody">
     <div class="header">
-       
-        <nav class="navbar">
-             
+
+
+        <ul class="miNav nav nav-pills justify-content-end">
+
+            <li class="misLi nav-item">
+                <form class="form-inline" action="/search" method="GET">
+                    <div class="form-group mx-sm-3 mb-2">
+                        <label for="name" class="sr-only">Buscar</label>
+                        <input type="search" class="form-control" name="name" id="search" placeholder="Buscar..">
+                    </div>
+                    <button type="submit" class="Buscar btn btn-primary mb-2 btn-warning">Buscar</button>
+                </form>
+            </li>
+
+            <li class="misLi nav-item">
+                <a class="nav-link active" href="/home">INICIO</a>
+            </li>
+
+            <li class="misLi nav-item">
+                <a class="nav-link active" href="/logout">Cerrar sesion {{user}}</a>
+            </li>
+
+
+           
+        </ul>
+
+        {{!-- <nav class="navbar">
+
             <ul>
                 <li>
                     <span>petCatch</span>
@@ -19,7 +48,7 @@
                 <li>
                     <form class="search" action="/search" method="GET">
                         <input type="search" name="name" id="search">
-                        <button>Vamos ahi</button>
+                        <button class="btn btn-success">Vamos ahi</button>
                     </form>
                 </li>
                 <li class="links">
@@ -31,16 +60,27 @@
                     </div>
                 </li>
             </ul>
-        </nav>
+        </nav> --}}
     </div>
 
     <script>
         const nameValue = document.getElementById("search").value;
 
-        document.getElementById("serach").value = nameValue;
+        document.getElementById("search").value = nameValue;
     </script>
 
+
     {{{body}}}
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>

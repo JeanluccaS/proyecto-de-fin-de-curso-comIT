@@ -16,9 +16,10 @@ const uploadStorage = multer.diskStorage({
         setFolderCallback(null, './server/public/img/profile')
     },
     filename: (req, file, setFilenameCallback) => {
-        setFilenameCallback(null, req.session.userLogged + path.extname(file.originalname));
+        setFilenameCallback(null, new Date().getTime() + path.extname(file.originalname));
     }
 });
+
 
 const upload = multer({ storage: uploadStorage });
 
@@ -43,17 +44,35 @@ app.use(expSesion({
 }))
 
 app.get("/", (req, res) => {
-    res.render("login", { layout: "landing" });
+    res.redirect("login");
 });
 app.get("/registrarse", (req, res) => {
     res.render("registerAcount", { layout: "landing" })
 });
 app.get("/home", (req, res) => {
-    res.render("home", { layout: "main" })
+    if (req.session.userLogged) {
+        const user = req.session.userLogged
+        autentification.getPostUser(user, result => {
+
+
+            if (result) {
+
+                res.render("home", { layout: "main", post: result })
+            }
+        })
+    } else {
+        req.session.message = {
+            class: "error",
+            text: "Error, debe iniciar sesion primero"
+        }
+        res.redirect("/login")
+    }
+
+
 });
 
 app.get("/login", (req, res) => {
-    res.render("login", { layout: "landing" });
+    res.render("login", { layout: "landing", message: req.session.message });
 });
 
 app.get("/logout", (req, res) => {
@@ -68,7 +87,7 @@ app.get("/profile", (req, res) => {
         res.render("login"), {
             layout: "landing",
             message: {
-                class: "todoOk",
+                class: "error",
                 text: "primero necesita iniciar sesion"
             }
         }
@@ -80,10 +99,10 @@ app.listen(HTTP_PORT, () => {
     console.log(`Iniciando en: http://localhost:${HTTP_PORT}`);
 });
 
-app.post("/register", (req, res) => {
+app.post("/registerAcount", (req, res) => {
 
-    autentification.getUser(req.body.user, result => {
-        if (!result.success) //si no pude consultar la DB
+    autentification.getUser(req.body.user, user => {
+        if (!user.success) //si no pude consultar la DB
         {
             res.render("registerAcount", {
                 layout: "landing",
@@ -94,7 +113,7 @@ app.post("/register", (req, res) => {
             });
             return;
         }
-        if (result.user) { //si encuentra un usuario:
+        if (user.user) { //si encuentra un usuario:
             res.render("registerAcount", {
                 layout: "landing",
                 message: {
@@ -115,6 +134,7 @@ app.post("/register", (req, res) => {
             });
             return;
         }
+
         autentification.validUserAcount(req.body.user, req.body.password, result => {
             if (!result) {
                 res.render("registerAcount", {
@@ -125,50 +145,41 @@ app.post("/register", (req, res) => {
                     }
                 });
             } else {
+                req.session.newUser = result;
+
                 res.render("registerUser", {
-                    layout: "landing",
-                    message: {
-                        class: "todoOk",
-                        text: "Registrado correctamente, por favor ingrese sesion "
-                    }
+                    layout: "landing"
                 })
             }
         })
     })
 });
 
-app.post("/registerUser", (req, res) => {
-    console.log(req.body);
-    autentification.getUser(req.body.user, result => {
-        if (!result.success) //si no pude consultar la DB
-        {
-            res.render("registerAcount", {
-                layout: "landing",
-                message: {
-                    class: "error",
-                    text: "Lo siento, estamos en mantenimiento, por favor, reintente registrarse, mas tarde"
-                }
-            });
-            return;
-        }
-        if (result.user) { //si encuentra un usuario:
-            res.render("registerAcount", {
-                layout: "landing",
-                message: {
-                    class: "error",
-                    text: "Lo siento, ese usuario ya existe, ingrese otro nombre."
-                }
-            });
-            return;
-        }
-        
-        autentification.validUserData(req.body.user, req.body.surname, req.body.profilePic, result => {
+app.post("/registerUser", upload.single('profilePic'), (req, res) => {
 
-        });
+
+    const newData = {
+        userName: req.session.newUser.name,
+        name: req.body.user,
+        surname: req.body.surname,
+        profilePic: req.file.filename,
+        myPostings: []
+    }
+
+    autentification.validUserData(newData, result => {
+        if (result) {
+            req.session.message = {
+                class: "todoOk",
+                text: "Registrado correctamente, por favor ingrese sesion "
+            }
+            res.redirect("/login");
+        }
     });
 });
+
 app.post("/login", (req, res) => {
-    console.log(req.body);
+
+
     autentification.validLogin(req.body.user, req.body.password, result => {
         if (result.success === -1) {
             res.render("login", {
@@ -193,19 +204,9 @@ app.post("/login", (req, res) => {
             //guardar user logeado en sesion.
             req.session.userLogged = req.body.user;
 
-
-            res.render("home", {
-                layout: "main",
-                message: {
-                    class: "todoOk",
-                    text: "TODo genial master"
-                }
-            });
+            res.redirect("/home");
         }
-
-
     });
-
 });
 
 app.get("/search", (req, res) => {
@@ -241,14 +242,10 @@ app.get("/search", (req, res) => {
 
 
 app.post("/changePic", upload.single('profilePic'), (req, res) => {
-   
-   
+
+
     if (req.session.userLogged) {
-        if(req.file){
-            console.log("encontre algo");
-        }else{
-            console.log("no encontre nada");
-        }
+
 
 
         const newPic = {
@@ -272,5 +269,44 @@ app.post("/changePic", upload.single('profilePic'), (req, res) => {
     }
 })
 
+app.post("/publicImage", upload.single('image'), (req, res) => {
 
+
+    let day = new Date();
+
+    day = day.toString(day);
+    date = day.slice(3, 15);
+
+    if (req.session.userLogged) {
+
+        persons.getByUserName(req.session.userLogged, result => {
+            if (result.success) {
+
+                person = result.user
+                const myPost = {
+                    myPostings:
+                    {
+                        pictureName: req.file.filename,
+                        pictureDescription: req.body.description,
+                        dateUploeaded: date
+                    }
+                }
+                autentification.addPost(person.userName, myPost, result => {
+
+                    if (result) {
+
+                        req.session.myPostings = result
+
+                        res.redirect("/home");
+                    } else {
+                        console.log("todo mal");
+                    }
+                })
+            } else {
+                res.redirect("/login");
+            }
+
+        })
+    }
+})
 

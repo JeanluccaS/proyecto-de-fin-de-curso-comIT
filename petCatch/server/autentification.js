@@ -19,6 +19,7 @@ const getUser = (user, cbResult) => {
                         success: false
                     })
                 } else {
+                  
                     cbResult({
                         success: true,
                         user: result
@@ -42,10 +43,11 @@ const validUserAcount = (user, password, cbResult) => {
                 password: password
             }
             users.insertOne(newUser, (err, result) => {
+        
                 if (err) {
                     cbResult(false);
                 } else {
-                    cbResult(true);
+                    cbResult(newUser);
                 }
                 client.close();
 
@@ -87,7 +89,7 @@ const validLogin = (user, pass, cbResult) => {
                                     user: result
                                 })
                             }
-
+                            client.close();
                         })
                     }
 
@@ -97,7 +99,25 @@ const validLogin = (user, pass, cbResult) => {
         }
     })
 }
+const validUserData = (newData, cbResult) => {
+    mongoDb.MongoClient.connect(mongoURL, (err, client) => {
+        if (err) {
+            cbResult(false)
+        } else {
+            const petCatchDB = client.db("petCatch");
+            const persons = petCatchDB.collection("persons");
 
+            persons.insertOne(newData, (err, result) => {
+                if (err) {
+                    cbResult(false);
+                } else {
+                    cbResult(true);
+                }
+                client.close();
+            })
+        }
+    });
+}
 const changeProfilePic = (user, newPic, cbResult) => {
     mongoDb.MongoClient.connect(mongoURL, (err, client) => {
         if (err) {
@@ -108,32 +128,95 @@ const changeProfilePic = (user, newPic, cbResult) => {
             const petCatchDB = client.db("petCatch");
             const persons = petCatchDB.collection("persons");
 
+
             const findUser = {
                 userName: user,
             }
-            console.log(findUser);
+         
             const uptdatePic = {
                 $set: {
                     profilePic: newPic.photo
                 }
             }
-            console.log(uptdatePic);
+         
             persons.updateOne(findUser, uptdatePic, (err, result) => {
-              
+
                 if (err) {
-                    cbResult: false
+                    cbResult(false)
                 } else {
 
                     cbResult(true)
                 }
+                client.close();
             })
         }
     })
+}
+const getPostUser = (user,cbResult)=>{
+    mongoDb.MongoClient.connect(mongoURL, (err, client) => {
+        if (err) {
+            cbResult({
+                success: -1
+            })
+        } else {
+            const petCatchDB = client.db("petCatch");
+            const persons = petCatchDB.collection("persons");
+
+            persons.findOne({userName :user},(err,result)=>{
+                if(err)
+                {
+                    cbResult(false)
+                }else{
+                   cbResult(result.myPostings) 
+                }
+            })
+
+
+        }
+    });
+}
+const addPost = (user, post, cbResult) => {
+    mongoDb.MongoClient.connect(mongoURL, (err, client) => {
+        if (err) {
+            cbResult({
+                success: -1
+            })
+        } else {
+            const petCatchDB = client.db("petCatch");
+            const persons = petCatchDB.collection("persons");
+
+            findQuery = {
+                userName: user
+            }
+
+            newPost = {
+                $push: {
+                    myPostings: post.myPostings
+                }
+            }
+
+            persons.updateOne(findQuery, newPost, (err, result) => {
+                if (err) {
+                    cbResult(false);
+                } else if (result) {
+                    
+                    cbResult({myPost:newPost});
+                }
+                client.close();
+            })
+
+
+        }
+    });
+
 }
 module.exports = {
     getUser,
     validUserAcount,
     validLogin,
     changeProfilePic,
+    validUserData,
+    addPost,
+    getPostUser,
 }
 

@@ -1,21 +1,23 @@
 {{#if person}}
 
-<div class="profilePicSone">
-    <div>
-        <div class="profilePics">
-            <img src="/img/profile/{{person.profilePic}}" >
-        </div>
-        <form action="/changePic" method="POST" enctype="multipart/form-data">
+
+<div class="card" style="width: 12rem;">
+    <h2 class="thePost borderDescription">Perfil de {{person.name}}</h2> 
+  <img class="card-img-top" src="img/profile/{{person.profilePic}}" alt="Card image cap">
+  <div class="card-body">
+    <form action="/changePic" method="POST" enctype="multipart/form-data">
             <input  type="file" name="profilePic" accept="image/*">
 
-            <button type="submit">cambiar foto de perfil</button>
+            <button type="submit" class="btn btn-warning">cambiar foto de perfil</button>
         </form>
-    </div>
+  </div>
 </div>
+
+    
+
+
+
 <div>
-    <span> galeria de {{person.name}}</span>
-</div>
-<div>
-    publicaciones
+    publicaciones (en desarrollo)
 </div>
 {{/if}}

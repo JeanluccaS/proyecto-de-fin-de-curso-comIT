@@ -1,8 +1,52 @@
-img{
-    height: 250px;
-    border-radius: 100%;
-    width: 250px;
+
+
+.thePost{
+   
+    background-color: cornflowerblue;
+    border: solid;
+    padding: 10px;
 }
+
+.borderDescription{
+    color: black;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    border: solid 3px black;
+    background-color: white;
+    border-radius: 10px;
+  
+}
+
+
+.homePhoto{
+    
+    border-radius: 0px;
+    padding:20px ;
+    background-color: white;
+    width: 50%;
+    max-width: 50%;
+ 
+}
+textarea{
+    resize: none;
+}
+.thePost textarea{
+    color: black;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    border: solid;
+    background-color: white;
+    border-radius: 10px;
+    margin: 5px;
+    margin-top: 5px;
+    padding: 5px;
+    width: 100%;
+}
+.postDesign{
+    background-color: white;
+    border-radius: 3px;
+}
+
+
+
 .profilePics{
     margin: 50px 0px 0px 0px;
     border: solid;
@@ -11,13 +55,32 @@ img{
     border-radius: 100%;
  
 }
+.misLi{
+    margin-top: 10px;
+    margin-right: 5px;
+} 
+.miNav{
+    margin-top: 5px;
+}
+.Buscar{
+    margin-right: 5px;
+}
 .header{  
-     margin-bottom: 7px;
+     margin-bottom: 10px;
+     height: 5%;
+     background-color: cornflowerblue;
+}
+.mensaje-todoOk{
+    color:violet;
+}
+.mensaje-error{
+    color:red;
 }
 
 .navbar {
-    background-color: royalblue;
+    background-color: grey;
     height: 50px;
+    
 }
 
 .navbar span{
@@ -28,8 +91,7 @@ img{
 
 .superBody{
     background-image:url("../img/fondoSinLogo.jpg");
-    padding: 2px;
-    margin: 0px;
+    background-size: 100%;
 }
 
 .navbar ul{

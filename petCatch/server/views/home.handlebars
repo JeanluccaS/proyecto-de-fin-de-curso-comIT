@@ -1,9 +1,45 @@
 
 
- <form action="/newPost" method="POST" enctype="multipart/form-data">
-            <input  type="file" name="postImage" accept="image/*">
-            <button type="submit">Subir una imagen</button>
-        </form>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 col-lg-6 offset-lg-3 mt-5 borderDescription">
+            <form action="/publicImage" method="POST" enctype="multipart/form-data">
+                <h2>publica una foto!</h2>
+                <div class="form-group">
+                    <label for="description">Descripcion</label>
+                    <textarea class="form-control"  name="description" rows="3" autocomplete="off" ></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="image">Example file input</label>
+                    <input type="file" class="form-control-file" name="image" accept="image/*">
+                </div>
+                <button class="btn btn-warning" type="submit">Publicar</button>
+            </form>
+        </div>
+
+        {{#if post}}
+
+
+        {{#each post}}
+        <div class="thePost col-lg-8 offset-lg-2  my-2 ">
+
+            <div class="col-sm-12 ">
+                <textarea>Descripcion: {{this.pictureDescription}} </textarea>
+                <p class="borderDescription"> Fecha de subida: {{this.dateUploeaded}}</p>
+                <img class="homePhoto img-fluid mx-auto d-block" src="img/profile/{{this.pictureName}}">
+            </div>
+
+        </div>
+
+        {{/each}}
+    </div>
+
+</div>
+{{else}}
+<p>aun no hay publicaciones</p>
+{{/if}}
+
+
 {{#if message}}
 <p class="mensaje-{{message.class}}">{{message.text}}</p>
 {{/if}}

@@ -22,7 +22,40 @@ const getByname = (nameUser, cbResult) => {
                         success: false
                     })
                 }else {
-                    console.log(result);
+                  
+                    cbResult({
+                        success: true,
+                        user: result
+                    
+                    })
+                }
+            })
+        }
+    })
+}
+
+const getByUserName = (nameUser, cbResult) => {
+    mongoDb.MongoClient.connect(mongoURL, (err, client) => {
+        if (err) {
+            cbResult({
+                success: false
+            })
+        } else {
+            const petCatchDB = client.db("petCatch");
+            const persons = petCatchDB.collection("persons");
+
+            persons.findOne({ userName: nameUser }, (err, result) => {
+                if (err) {
+                    cbResult({
+                        success: false
+                    })
+                }else if(!result)
+                {
+                    cbResult({
+                        success: false
+                    })
+                }else {
+                   
                     cbResult({
                         success: true,
                         user: result
@@ -35,5 +68,6 @@ const getByname = (nameUser, cbResult) => {
 }
 
 module.exports = {
-    getByname
+    getByname,
+    getByUserName
 }

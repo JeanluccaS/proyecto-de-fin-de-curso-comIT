@@ -48,7 +48,16 @@ p{
     background-color: blue;
 }
 .mensaje-todoOk{
-    color:violet;
+    background-color: green;
+    border-radius: 10px;
+    display: flex;
+    font-family: monospace;
+    font-size: larger;
+    color: #0c0202;
+    margin-right: 30px;
+    margin-top: 5px;
+    margin-left: 800px;
+    padding: 10px;
 }
 .superBody{
     background-image:url("../img/fondo\ de\ pagina.jpg");
@@ -60,24 +69,19 @@ p{
     background-color: royalblue;
     padding: 5px;
 }
-.usuario,label{
-    margin:2px;
-    font-size: large;
-    font-family: monospace;
-    color: honeydew;
-    border-radius: 3px;
-    padding: 1px;
-    
-}
+
+
 .loginBtn{
     border-radius: 100%;
     margin-left: 5px;
     background: #fff4f4;
 }
 .miForm{
-    display: flex;
-    padding: 0;
-    margin-left: 45%;
+    display: block;
+    margin-top: 10%;
+    background-color: white;
+    border: solid;
+    border-radius: 4px;
 }
 .Registrate{
     background-color: darkgoldenrod;
