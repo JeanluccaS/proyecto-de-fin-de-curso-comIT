@@ -1,7 +1,7 @@
 # proyecto-de-fin-de-curso-comIT
 
 <pre>bienvenidos a petCatch, este proyecto consiste en una red social de animales, similar a instagram o faceook pero exclusiva de animales.</pre>
-##Requisitos
+## Requisitos
 <pre> 
 instalar mongoDBCompassComunnity
 instalar node
