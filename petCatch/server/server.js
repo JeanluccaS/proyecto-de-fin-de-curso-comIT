@@ -7,6 +7,7 @@ const persons = require("./persons");
 const expSesion = require("express-session");
 const session = require("express-session");
 const multer = require("multer");
+const { resolveNaptr } = require("dns");
 
 const app = express();
 const HTTP_PORT = 5000;
@@ -214,16 +215,28 @@ app.get("/search", (req, res) => {
     if (req.session.userLogged) {
         persons.getByname(req.query.name, result => {
             if (result.success) {
-                res.render("profile", {
-                    layout: "main",
-                    person: result.user,
-                    user: req.session.userLogged
-                });
+                req.session.profile = result.user;
+                if (result.user.userName !== req.session.userLogged) {
+                    res.render("profile", {
+                        layout: "main",
+                        person: req.session.profile,
+                        user: req.session.userLogged,
+                        myProfile: false
+                    });
+                } else {
+                    res.render("profile", {
+                        layout: "main",
+                        person: result.user,
+                        user: req.session.userLogged,
+                        myProfile: true
+                    });
+                }
+
             } else {
                 res.render("home", {
                     layout: "main",
                     message: {
-                        class: "todoOk",
+                        class: "error",
                         text: "no se encontro ese usuario"
                     }
                 });
@@ -240,6 +253,25 @@ app.get("/search", (req, res) => {
     }
 });
 
+
+app.get("/addFriend", (req, res) => {
+
+    const newFriend = {
+        myFriend: req.session.profile,
+    }
+    autentification.addFriend(req.session.userLogged, newFriend, result => {
+        if (result) {
+
+        } else {
+            res.send(400);
+        }
+    })
+
+
+
+
+
+})
 
 app.post("/changePic", upload.single('profilePic'), (req, res) => {
 

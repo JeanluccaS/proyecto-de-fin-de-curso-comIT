@@ -2,22 +2,44 @@
 
 
 <div class="card" style="width: 12rem;">
-    <h2 class="thePost borderDescription">Perfil de {{person.name}}</h2> 
+  <h2 class="thePost borderDescription">Perfil de {{person.name}}</h2>
   <img class="card-img-top" src="img/profile/{{person.profilePic}}" alt="Card image cap">
   <div class="card-body">
+    {{#if myProfile}}
     <form action="/changePic" method="POST" enctype="multipart/form-data">
-            <input  type="file" name="profilePic" accept="image/*">
+      <input type="file" name="profilePic" accept="image/*">
 
-            <button type="submit" class="btn btn-warning">cambiar foto de perfil</button>
-        </form>
+      <button type="submit" class="btn btn-warning">cambiar foto de perfil</button>
+    </form>
+    {{else}}
+    <button onclick="addFriend()" class="btn btn-warning">Agregar amigo</button>
+    {{/if}}
   </div>
 </div>
-
-    
-
-
-
+<div id="Mensaje"></div>
 <div>
-    publicaciones (en desarrollo)
+  publicaciones (en desarrollo)
 </div>
 {{/if}}
+
+<script>
+  function addFriend() {
+    const div = document.getElementById("Mensaje");
+
+    let xhr = new XMLHttpRequest();
+
+    xhr.onload = function () {
+      div.innerHTML = "";
+      if (this.status === 200) {
+        div.innerHTML += `<p>hola kpo<p>`;
+      } else {
+        div.innerHTML += `<p>hola titan<p>`;
+      }
+    }
+
+    xhr.open("GET", "/addFriend");
+    xhr.send();
+
+  }
+
+</script>

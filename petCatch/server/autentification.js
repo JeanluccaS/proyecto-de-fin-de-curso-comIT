@@ -19,7 +19,7 @@ const getUser = (user, cbResult) => {
                         success: false
                     })
                 } else {
-                  
+
                     cbResult({
                         success: true,
                         user: result
@@ -43,7 +43,7 @@ const validUserAcount = (user, password, cbResult) => {
                 password: password
             }
             users.insertOne(newUser, (err, result) => {
-        
+
                 if (err) {
                     cbResult(false);
                 } else {
@@ -132,13 +132,13 @@ const changeProfilePic = (user, newPic, cbResult) => {
             const findUser = {
                 userName: user,
             }
-         
+
             const uptdatePic = {
                 $set: {
                     profilePic: newPic.photo
                 }
             }
-         
+
             persons.updateOne(findUser, uptdatePic, (err, result) => {
 
                 if (err) {
@@ -152,7 +152,7 @@ const changeProfilePic = (user, newPic, cbResult) => {
         }
     })
 }
-const getPostUser = (user,cbResult)=>{
+const getPostUser = (user, cbResult) => {
     mongoDb.MongoClient.connect(mongoURL, (err, client) => {
         if (err) {
             cbResult({
@@ -162,12 +162,11 @@ const getPostUser = (user,cbResult)=>{
             const petCatchDB = client.db("petCatch");
             const persons = petCatchDB.collection("persons");
 
-            persons.findOne({userName :user},(err,result)=>{
-                if(err)
-                {
+            persons.findOne({ userName: user }, (err, result) => {
+                if (err) {
                     cbResult(false)
-                }else{
-                   cbResult(result.myPostings) 
+                } else {
+                    cbResult(result.myPostings)
                 }
             })
 
@@ -199,8 +198,8 @@ const addPost = (user, post, cbResult) => {
                 if (err) {
                     cbResult(false);
                 } else if (result) {
-                    
-                    cbResult({myPost:newPost});
+
+                    cbResult({ myPost: newPost });
                 }
                 client.close();
             })
@@ -208,8 +207,50 @@ const addPost = (user, post, cbResult) => {
 
         }
     });
-
 }
+const addFriend = (user, myFriend, cbResult) => {
+    mongoDb.MongoClient.connect(mongoURL, (err, client) => {
+        if (err) {
+            cbResult({
+                success: -1
+            })
+        } else {
+            const petCatchDB = client.db("petCatch");
+            const persons = petCatchDB.collection("persons");
+
+            findQuery = {
+                userName: user
+            }
+            
+            Friend = {
+                $push: {
+                    myFriends: myFriend.userName
+                }
+            }
+
+            persons.updateOne(findQuery, Friend, (err, result) => {
+                if (err) {
+                    cbResult({
+                        success: false
+                    })
+                } else if (result) {
+                    cbResult({
+                        success:true,
+                        newFriend:Friend
+                    })
+                }else
+                {
+                    cbResult({
+                        success:false
+                    })
+                }
+
+            })
+
+        }
+    });
+}
+
 module.exports = {
     getUser,
     validUserAcount,
@@ -218,5 +259,6 @@ module.exports = {
     validUserData,
     addPost,
     getPostUser,
+    addFriend,
 }
 
